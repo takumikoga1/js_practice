@@ -5,22 +5,25 @@
 // オブジェクト `calculator` に 3 種類の add メソッドを実装し、this がどう振る舞うかを確認してください。
 
 const calculator = {
-  value: 0,
+    value: 0,
 
-  // TODO: 関数式を使って add1 を定義し、this.value に n を加算して結果を出力する
-  add1: function(n) {
-    // ここに実装
-  },
+    // TODO: 関数式を使って add1 を定義し、this.value に n を加算して結果を出力する
+    add1: function (n) {
+        // ここに実装
+        console.log(this.value + n);
+    },
 
-  // TODO: メソッド省略記法（関数宣言スタイル）を使って add2 を定義し、同様の処理を実装する
-  add2(n) {
-    // ここに実装
-  },
+    // TODO: メソッド省略記法（関数宣言スタイル）を使って add2 を定義し、同様の処理を実装する
+    add2(n) {
+        // ここに実装
+        console.log(this.value + n);
+    },
 
-  // TODO: アロー関数を使って add3 を定義してみる（this の動きに注意）
-  add3: (n) => {
-    // ここに実装
-  }
+    // TODO: アロー関数を使って add3 を定義してみる（this の動きに注意）
+    add3: (n) => {
+        // ここに実装
+        console.log(this); // grobalなスコープを参照してる
+    },
 };
 
 // TODO: 以下を順に実行し、結果と this の動作の違いを確認してください
@@ -33,18 +36,24 @@ calculator.add3(30);
 
 // TODO: measureTime を実装
 function measureTime(fn) {
-  // 実行前の時刻を取得
-  // 関数 fn を実行
-  // 実行後の時刻を取得
-  // 実行時間をコンソールに出力
-  // 結果を return
+    // 実行前の時刻を取得
+    const start = Date.now();
+    // 関数 fn を実行
+    fn();
+    // re = fn();
+    // 実行後の時刻を取得
+    const end = Date.now();
+    // 実行時間をコンソールに出力
+    console.log(end - start);
+    // 結果を return
+    return end - start;
 }
 
 // TODO: 以下のように使って、実行時間を計測してみてください
 measureTime(() => {
-  let sum = 0;
-  for (let i = 0; i < 1_000_000; i++) {
-    sum += i;
-  }
-  return sum;
+    let sum = 0;
+    for (let i = 0; i < 1_000_000; i++) {
+        sum += i;
+    }
+    return sum;
 });
