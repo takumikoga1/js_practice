@@ -8,8 +8,28 @@ const products = [
     { id: 4, name: 'モニター', price: 30000, category: 'electronics' }
   ];
   
-  // TODO 1: electronics カテゴリの商品のみを抽出 
+  // TODO 1: electronics カテゴリの商品のみを抽出
+  console.log(products.filter(function(value){
+    return value.category == 'electronics';
+  }));
   // TODO 2: 全商品の合計金額を計算
+  console.log(products.reduce(function(result, value){
+    return result + value.price
+  }, 0))
   // TODO 3: 価格が10000円以上の商品名のリストを作成
+  const expensiveProducts = products.filter(function(value){
+    return value.price >= 10000;
+  });
+  const expensiveProductsList = expensiveProducts.map(function(value){
+    return value.name
+  })
+  console.log(expensiveProductsList);
   // TODO 4: カテゴリごとに商品をグループ化
-  
+  const groupedProducts = products.reduce(function(accumulator, currentValue){
+    const categoryName = currentValue.category
+    if (!accumulator[categoryName]) {
+      accumulator[categoryName] = [];
+    }
+    accumulator[categoryName].push(currentValue)
+    return accumulator;
+  }, {});
