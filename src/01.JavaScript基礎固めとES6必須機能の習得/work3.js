@@ -9,18 +9,21 @@ const calculator = {
 
   // TODO: 関数式を使って add1 を定義し、this.value に n を加算して結果を出力する
   add1: function(n) {
-    // ここに実装
+    const newValue = this.value + n;
+    console.log(newValue);
   },
 
   // TODO: メソッド省略記法（関数宣言スタイル）を使って add2 を定義し、同様の処理を実装する
   add2(n) {
-    // ここに実装
+    const newValue2 = this.value + n;
+    console.log(newValue2);
   },
 
   // TODO: アロー関数を使って add3 を定義してみる（this の動きに注意）
   add3: (n) => {
-    // ここに実装
-  }
+    const newValue3 = calculator.value + n;
+    console.log(newValue3)
+  },
 };
 
 // TODO: 以下を順に実行し、結果と this の動作の違いを確認してください
@@ -34,10 +37,16 @@ calculator.add3(30);
 // TODO: measureTime を実装
 function measureTime(fn) {
   // 実行前の時刻を取得
+  const startTime = Date.now();
   // 関数 fn を実行
+  const result = fn();
   // 実行後の時刻を取得
+  const endTime = Date.now();
   // 実行時間をコンソールに出力
+  const sumTime = endTime - startTime;
+  console.log(sumTime);
   // 結果を return
+  return result;
 }
 
 // TODO: 以下のように使って、実行時間を計測してみてください
