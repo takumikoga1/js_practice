@@ -1,14 +1,5 @@
 // 課題6: Promise と async/await の実装
-// 事前に「7.5 Promise」を読んでから取り組んでください。
-
-// === 課題の目的 ===
-// - Promise と async/await を使って非同期処理を理解する
-// - エラーハンドリングの書き方を学ぶ
-// - 複数リクエストの並列処理を体験する
-
-// === 課題内容 ===
-// APIクライアントクラスを作成し、3種類のメソッドを実装してください。
-// 各メソッドでは、fetch を使って API からデータを取得します。
+// 事前に 7.5 Promise を読んでから取り組む
 
 // APIクライアントクラスの実装
 
@@ -16,42 +7,52 @@ class ApiClient {
   constructor(baseURL) {
     this.baseURL = baseURL;
   }
-  
-  // TODO 1: Promiseチェーンを使ったAPI取得メソッドを実装してください
-  // - fetch(`${this.baseURL}${endpoint}`) を使って取得
-  // - .then() を使ってレスポンスを JSON に変換
-  // - レスポンスがエラーなら throw でエラー発生
-  // - .catch() でエラーを受け取り、適切にエラーハンドリング
+
+  // TODO 1: Promiseを使った実装
   getWithPromise(endpoint) {
     return fetch(`${this.baseURL}${endpoint}`)
-      .then(response => {
-        // TODO: レスポンスがエラー (response.ok で判定) の場合はエラーを投げる
+      .then((response) => {
+        // エラーハンドリング
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        return response.json();
       })
-      .then(data => {
-        // TODO: 取得したデータを処理（ここではデータをそのまま返す想定）
+      .then((data) => {
+        // データ処理
+        console.log(data);
       })
-      .catch(error => {
-        // TODO: エラーが発生した場合はここで処理（console.error など）
+      .catch((error) => {
+        // エラー処理
+        console.log(error);
       });
   }
-  
-  // TODO 2: async/await を使ったAPI取得メソッドを実装してください
-  // - try-catch を使ってエラーハンドリング
-  // - fetch → レスポンス確認 → JSON 変換の順に実装
+
+  // TODO 2: async/awaitを使った実装
   async getWithAsync(endpoint) {
     try {
-      // TODO: fetch を使ってデータ取得
-      // TODO: response.ok を使ってエラーチェック
-      // TODO: JSON を取得して返す
+      // 実装
+      const response = await fetch(`${this.baseURL}${endpoint}`);
+      const data = response.json();
+      return data;
     } catch (error) {
-      // TODO: エラーが発生した場合の処理（console.error など）
+      // エラーハンドリング
+      console.error(error);
     }
   }
-  
-  // TODO 3: 複数のAPIを並列で取得するメソッドを実装してください
-  // - 引数 endpoints は配列
-  // - Promise.all() を使用して全てのAPIを並列で取得し、すべての結果を返す
+
+  // TODO 3: 並列処理の実装
   async getMultiple(endpoints) {
-    // TODO: Promise.all を使って endpoints 内の全API取得を並列実行
+    // Promise.all を使用
+    const promises = endpoints.map((endpoint) => {
+      return fetch(`${this.baseURL}${endpoint}`).then((response) => {
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        return response.json();
+      });
+    });
+    const results = await Promise.all(promises);
+    return results;
   }
 }
