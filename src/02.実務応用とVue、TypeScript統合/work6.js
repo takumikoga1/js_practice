@@ -1,5 +1,5 @@
 // 課題6: Promise と async/await の実装
-// 事前に「7.5 Promise」を読んでから取り組んでください。
+// 事前に「10.5 Promise/async・await構文」(P.564〜) を読んでから取り組んでください。
 
 // === 課題の目的 ===
 // - Promise と async/await を使って非同期処理を理解する
@@ -17,7 +17,7 @@ class ApiClient {
     this.baseURL = baseURL;
   }
   
-  // TODO 1: Promiseチェーンを使ったAPI取得メソッドを実装してください
+  // TODO 1: Promiseチェーンを使ったAPI取得メソッドを実装してください（10-30参照）
   // - fetch(`${this.baseURL}${endpoint}`) を使って取得
   // - .then() を使ってレスポンスを JSON に変換
   // - レスポンスがエラーなら throw でエラー発生
@@ -35,7 +35,7 @@ class ApiClient {
       });
   }
   
-  // TODO 2: async/await を使ったAPI取得メソッドを実装してください
+  // TODO 2: async/await を使ったAPI取得メソッドを実装してください（10-48参照）
   // - try-catch を使ってエラーハンドリング
   // - fetch → レスポンス確認 → JSON 変換の順に実装
   async getWithAsync(endpoint) {
@@ -48,7 +48,7 @@ class ApiClient {
     }
   }
   
-  // TODO 3: 複数のAPIを並列で取得するメソッドを実装してください
+  // TODO 3: 複数のAPIを並列で取得するメソッドを実装してください（10-45参照）
   // - 引数 endpoints は配列
   // - Promise.all() を使用して全てのAPIを並列で取得し、すべての結果を返す
   async getMultiple(endpoints) {
