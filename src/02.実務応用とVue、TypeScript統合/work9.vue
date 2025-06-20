@@ -30,7 +30,8 @@
     <!-- TODO 4 (応用): adminUsers を別でフィルターして表示してもOK -->
     
     <!-- TODO 5 (追加課題): localStorageへの保存・読み込みボタンを追加 -->
-    
+    <button @click="addUser" type="submit">保存</button>
+    <button @click="load">読み込み</button>
   </div>
 </template>
 
@@ -45,7 +46,19 @@ import { useUser } from '@/composables/useUser';
 
 // TODO 8 (追加課題): localStorageへの保存・読み込み機能を実装（10.3.4 P.538〜参照）
 // - 保存時はJSON.stringifyを使用
+const addUser = () => {
+  const user = { id: 1, name: "Tom", role: "admin" };
+  localStorage.setItem("user", JSON.stringify(user));
+};
 // - 読み込み時はJSON.parseを使用
+const load = () => {
+  const json = localStorage.getItem("user");
+  if (json){
+  const user = JSON.parse(json);
+  console.log(user);
+  }
+};
+
 </script>
 
 <style scoped>
