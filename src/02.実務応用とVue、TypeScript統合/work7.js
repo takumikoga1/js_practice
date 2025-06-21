@@ -1,7 +1,5 @@
 // 課題7: 実務的な非同期処理パターン
-// 事前に「7.5.3 並列処理」を読んでから取り組んでください。
-
-const { resolveTypeReferenceDirective } = require("typescript");
+// 事前に「10.5.3 並列処理」(P.568〜) を読んでから取り組んでください。
 
 // === 課題概要 ===
 // 実務でもよく使う非同期処理のパターン（リトライ、タイムアウト、逐次実行・並列実行）を体験します。
@@ -39,8 +37,8 @@ async function fetchWithRetry(url, options = {}, maxRetries = 3) {
 // 2. タイムアウト付き Promise 実装
 // ===========================
 
-// TODO 2: withTimeout 関数を実装してください
-// - 引数:
+// TODO 2: withTimeout 関数を実装してください（Promise.raceの活用 - 10-47参照）
+// - 引数: 
 //   - promise: 任意の Promise
 //   - timeoutMs: タイムアウトまでの時間（ミリ秒）
 // - timeoutMs ミリ秒以内に promise が完了しなければ、タイムアウトエラーを発生させる
@@ -59,10 +57,10 @@ function withTimeout(promise, timeoutMs) {
 // 3. 逐次実行と並列実行の使い分け
 // ===========================
 
-// TODO 3: processUserData 関数を実装してください
+// TODO 3: processUserData 関数を実装してください（10-44, 10-45参照）
 // - 引数: userIds （配列。複数ユーザーIDが入っている）
 // - 各ユーザーのデータを fetch で取得し、さらにそのユーザーの投稿も取得する
-// - 複数ユーザーのデータ取得は並列で実行する
+// - 複数ユーザーのデータ取得は並列で実行する（Promise.all）
 // - 各ユーザーの投稿取得は、そのユーザーのデータ取得が終わってから実行する（逐次実行）
 async function processUserData(userIds) {
   // ここに実装
@@ -76,17 +74,4 @@ async function processUserData(userIds) {
   const users = await Promise.all(userFetchPromises);
   // 2. 取得したユーザーデータの中の id を使って
   //    https://api.example.com/users/{userId}/posts を取得
-  const results = [];
-
-  for (const user of users) {
-    const posts = await fetch(
-      `https://api.example.com/users/${userId}/posts`
-    ).then((response) => response.json());
-
-    results.push({
-      user,
-      posts,
-    });
-  }
-  return results;
 }
