@@ -1,8 +1,6 @@
 // 課題5: 実務で使うモデルクラスの実装
 // 事前に「5.5.1 クラス構文（class, constructor, getter, static）」を読んでから取り組んでください。
 
-const { TypePredicateKind, isTupleTypeNode } = require("typescript");
-
 // === 課題概要 ===
 // Todoアプリのモデル（データ構造と操作）をクラスで表現してください。
 // クラス構文・getter・static メソッドを活用して実装します。
