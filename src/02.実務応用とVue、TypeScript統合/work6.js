@@ -1,4 +1,5 @@
 // 課題6: Promise と async/await の実装
+
 // 事前に「10.5 Promise/async・await構文」(P.564〜) を読んでから取り組んでください。
 
 // === 課題の目的 ===
