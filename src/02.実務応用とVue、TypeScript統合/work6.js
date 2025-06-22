@@ -38,7 +38,7 @@ class ApiClient {
       })
       .catch((error) => {
         // エラー処理
-        console.error(`エラー処理：${error}`);
+        console.error(`エラー：${error}`);
       });
   }
   
@@ -56,7 +56,7 @@ class ApiClient {
       return data;
     } catch (error) {
       // エラーハンドリング
-      console.error(`エラー処理：${error}`);
+      console.error(`エラー：${error}`);
     }
   }
   
