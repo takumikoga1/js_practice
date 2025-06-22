@@ -74,4 +74,10 @@ async function processUserData(userIds) {
   const users = await Promise.all(userFetchPromises);
   // 2. 取得したユーザーデータの中の id を使って
   //    https://api.example.com/users/{userId}/posts を取得
+  const posts = users.map((userId) =>
+    fetch(`https://api.example.com/users/${userId}/posts`).then((response) =>
+      response.json()
+    )
+  )
+  return posts;
 }
