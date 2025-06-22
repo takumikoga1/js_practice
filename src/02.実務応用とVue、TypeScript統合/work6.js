@@ -34,10 +34,11 @@ class ApiClient {
       .then((data) => {
         // データ処理
         console.log(data);
+        return data;
       })
       .catch((error) => {
         // エラー処理
-        console.log(error);
+        console.error(`エラー処理：${error}`);
       });
   }
   
@@ -48,11 +49,14 @@ class ApiClient {
     try {
       // 実装
       const response = await fetch(`${this.baseURL}${endpoint}`);
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
       const data = response.json();
       return data;
     } catch (error) {
       // エラーハンドリング
-      console.error(error);
+      console.error(`エラー処理：${error}`);
     }
   }
   
