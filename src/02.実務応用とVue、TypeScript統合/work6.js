@@ -1,4 +1,5 @@
 // 課題6: Promise と async/await の実装
+
 // 事前に「10.5 Promise/async・await構文」(P.564〜) を読んでから取り組んでください。
 
 // === 課題の目的 ===
@@ -24,14 +25,21 @@ class ApiClient {
   // - .catch() でエラーを受け取り、適切にエラーハンドリング
   getWithPromise(endpoint) {
     return fetch(`${this.baseURL}${endpoint}`)
-      .then(response => {
-        // TODO: レスポンスがエラー (response.ok で判定) の場合はエラーを投げる
+      .then((response) => {
+        // エラーハンドリング
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        return response.json();
       })
-      .then(data => {
-        // TODO: 取得したデータを処理（ここではデータをそのまま返す想定）
+      .then((data) => {
+        // データ処理
+        console.log(data);
+        return data;
       })
-      .catch(error => {
-        // TODO: エラーが発生した場合はここで処理（console.error など）
+      .catch((error) => {
+        // エラー処理
+        console.error(`エラー：${error}`);
       });
   }
   
@@ -40,11 +48,16 @@ class ApiClient {
   // - fetch → レスポンス確認 → JSON 変換の順に実装
   async getWithAsync(endpoint) {
     try {
-      // TODO: fetch を使ってデータ取得
-      // TODO: response.ok を使ってエラーチェック
-      // TODO: JSON を取得して返す
+      // 実装
+      const response = await fetch(`${this.baseURL}${endpoint}`);
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      const data = await response.json();
+      return data;
     } catch (error) {
-      // TODO: エラーが発生した場合の処理（console.error など）
+      // エラーハンドリング
+      console.error(`エラー：${error}`);
     }
   }
   
@@ -52,6 +65,16 @@ class ApiClient {
   // - 引数 endpoints は配列
   // - Promise.all() を使用して全てのAPIを並列で取得し、すべての結果を返す
   async getMultiple(endpoints) {
-    // TODO: Promise.all を使って endpoints 内の全API取得を並列実行
+    // Promise.all を使用
+    const promises = await endpoints.map((endpoint) => {
+      return fetch(`${this.baseURL}${endpoint}`).then((response) => {
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        return response.json();
+      });
+    });
+    const results = await Promise.all(promises);
+    return results;
   }
 }

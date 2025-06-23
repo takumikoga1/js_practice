@@ -16,38 +16,64 @@
 -->
 
 <template>
-  <div class="user-list">
-
+  <div class="user-list-container">
     <!-- TODO 1: ローディング中は「読み込み中...」と表示 -->
     <!-- 例: v-if="loading" -->
+    <div v-if="loading">読み込み中...</div>
 
     <!-- TODO 2: エラーがあればエラーメッセージを表示 -->
     <!-- 例: v-if="error" -->
+    <div v-if="error">{{ error }}</div>
 
     <!-- TODO 3: ユーザーリストを表示 -->
     <!-- 例: v-for で users を表示 -->
+    <div v-for="user in users" :key="user.id" class="user-list">
+      {{ user.name }}
+    </div>
 
     <!-- TODO 4 (応用): adminUsers を別でフィルターして表示してもOK -->
-    
+    <button @click="addUser" type="submit">保存</button>
+
     <!-- TODO 5 (追加課題): localStorageへの保存・読み込みボタンを追加 -->
-    
+    <button @click="load">読み込み</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useUser } from '@/composables/useUser';
+import { onMounted } from "vue";
+// import { useUser } from '@/composables/useUser';
+import { useUser } from "src/02.実務応用とVue、TypeScript統合/work8.ts";
 
 // TODO 6: useUser() composable を呼び出して、必要な状態・関数を取得してください
 // - users, loading, error, fetchUsers など
+const { users, loading, error, fetchUsers } = useUser();
 
 // TODO 7: onMounted フックを使って、コンポーネントマウント時に fetchUsers() を実行してください
-
+onMounted(() => {
+  fetchUsers();
+});
 // TODO 8 (追加課題): localStorageへの保存・読み込み機能を実装（10.3.4 P.538〜参照）
 // - 保存時はJSON.stringifyを使用
+const addUser = () => {
+  const storage = localStorage;
+  const user = { id: 1, name: "Tom", role: "admin" };
+  storage.setItem("user", JSON.stringify(user));
+};
 // - 読み込み時はJSON.parseを使用
+const load = () => {
+  const user = localStorage.getItem("user");
+  if (user) {
+    const data = JSON.parse(user);
+    console.log(data.name);
+  }
+};
 </script>
 
 <style scoped>
 /* TODO: スタイルは自由に実装してください */
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 </style>
