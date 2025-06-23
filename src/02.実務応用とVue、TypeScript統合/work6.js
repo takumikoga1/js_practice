@@ -53,7 +53,7 @@ class ApiClient {
       if (!response.ok) {
         throw new Error(`${response.status}`);
       }
-      const data = response.json();
+      const data = await response.json();
       return data;
     } catch (error) {
       // エラーハンドリング
@@ -66,7 +66,7 @@ class ApiClient {
   // - Promise.all() を使用して全てのAPIを並列で取得し、すべての結果を返す
   async getMultiple(endpoints) {
     // Promise.all を使用
-    const promises = endpoints.map((endpoint) => {
+    const promises = await endpoints.map((endpoint) => {
       return fetch(`${this.baseURL}${endpoint}`).then((response) => {
         if (!response.ok) {
           throw new Error(`${response.status}`);

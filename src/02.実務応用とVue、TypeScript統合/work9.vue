@@ -16,7 +16,7 @@
 -->
 
 <template>
-  <div class="user-list">
+  <div class="user-list-container">
     <!-- TODO 1: ローディング中は「読み込み中...」と表示 -->
     <!-- 例: v-if="loading" -->
     <div v-if="loading">読み込み中...</div>
@@ -46,7 +46,7 @@ import { useUser } from "src/02.実務応用とVue、TypeScript統合/work8.ts";
 
 // TODO 6: useUser() composable を呼び出して、必要な状態・関数を取得してください
 // - users, loading, error, fetchUsers など
-const { users, loading, error, adminUsers, fetchUsers } = useUser();
+const { users, loading, error, fetchUsers } = useUser();
 
 // TODO 7: onMounted フックを使って、コンポーネントマウント時に fetchUsers() を実行してください
 onMounted(() => {
